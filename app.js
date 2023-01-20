@@ -1,8 +1,9 @@
-const express  = require('express')
-const app      = express();
-const products = require('./routes/products')
-const user   = require('./routes/user')
-const notFound = require('./middleware/notFound');
+const express   = require('express')
+const app       = express();
+const products  = require('./routes/products')
+const user      = require('./routes/user')
+const login     = require('./routes/login') 
+const notFound  = require('./middleware/notFound');
 const connectDB = require('./db/connect')
 
 const PORT = 3000;
@@ -14,6 +15,7 @@ app.use(express.json());
 
 app.use('/api/products', products);
 app.use('/api/user',user)
+app.use('/', login);
 app.use(notFound)
 
 const start = async()=>{

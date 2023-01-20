@@ -12,14 +12,6 @@ const hashPassword = async(password) => {
     .catch(err => console.error(err.message));
     return hashedPassword;
 }
-
-const verifyPassword = async(password, hashedPassword) => {
-    let areTheyEqual = bcrypt.compare(password,hashedPassword).then((res)=>
-    {
-        return res;
-    }).catch(err => console.log(err));
-    return areTheyEqual;
-}
 const getAllUser = asyncWrapper(async(req,res) =>{
     const user = await User.find({});
     res.status(200).json({ user });
@@ -63,21 +55,10 @@ const deleteUser =  asyncWrapper(async(req,res)=>{
     res.status(200).json({user});
 })
 
-const loginUser = asyncWrapper(async(req,res)=>{
-    const user     = User.findOne({ email: req.body.email })
-    const isPasswordCorrect = verifyPassword(req.body.password,user.password);
-
-    if(isPasswordCorrect){
-        res.send({ user })
-    }else{
-        res.send({user: "not found"})
-    }
-})
 module.exports = {
     getAllUser, 
     createUser,
     getUser,
     updateUser,
     deleteUser,
-    loginUser,
 }
